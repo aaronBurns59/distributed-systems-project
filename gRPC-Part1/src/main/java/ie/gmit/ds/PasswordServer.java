@@ -8,13 +8,13 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 
-public class Server 
+public class PasswordServer 
 {
 	private Server server;
 	private static final Logger logger = Logger.getLogger(Server.class.getName());
 	
 	public static void main(String [] args) throws IOException, InterruptedException{
-		final Server server = new Server();
+		final PasswordServer server = new PasswordServer();
 		server.start();
 		server.blockUntilShutdown();
 		
@@ -23,10 +23,12 @@ public class Server
 	private void start() throws IOException
 	{
 		
+		
 	}
 	
 	private void stop()
 	{
+		
 	}
 	
 	private void blockUntilShutdown() throws InterruptedException
