@@ -22,18 +22,23 @@ public class PasswordServer
 	
 	private void start() throws IOException
 	{
-		
-		
+		int portNo = 8081;
+		server = ServerBuilder.forPort(portNo)
+				.build()
+				.start();
+		logger.info("Server started, Listening at port: " + portNo);
 	}
 	
 	private void stop()
 	{
-		
+		if(server != null)
+			server.shutdown();
 	}
 	
 	private void blockUntilShutdown() throws InterruptedException
 	{
-		
+		if(server != null)
+			server.awaitTermination();
 	}
 
 }
