@@ -1,9 +1,6 @@
 package ie.gmit.ds;
 
-
-import com.google.protobuf.BoolValue;
 import com.google.protobuf.ByteString;
-
 import io.grpc.stub.StreamObserver;
 
 public class PasswordServiceImpl extends PasswordServiceGrpc.PasswordServiceImplBase
@@ -23,38 +20,33 @@ public class PasswordServiceImpl extends PasswordServiceGrpc.PasswordServiceImpl
 		// Creating a hashed version of the password using the salt for security
 		byte[] hashedPassword = Passwords.hash(password, salt);
 		
-		
-		// Creating a response and passing the necessary parameters 
-		UserLoginResponse res =UserLoginResponse.newBuilder()
+		// Generate the response
+		UserLoginResponse res =UserLoginResponse.newBuilder() 
 				.setUserId(req.getUserId())
 				.setHashedPassword(ByteString.copyFrom(hashedPassword))
                 .setSalt(ByteString.copyFrom(salt))
                 .build();
-		// Send the res to the client
+		// send the res to the client
 		resObserver.onNext(res);
-		//complete the request
+		// signal the request is  finished
 		resObserver.onCompleted();
 	}// hash
 	
 	@Override
 	public void validate(ConfirmPasswordRequest req, StreamObserver<ConfirmPasswordResponse> resObserver)
 	{
+		// Variables are the same as the above methods (Not Physically)
 		char[] password = req.getPassword().toCharArray();
 		byte[] salt = Passwords.getNextSalt();
 		byte[] hashedPassword = Passwords.hash(password, salt);
 		
-		// Generate the response
+		// Generate the response 
 		ConfirmPasswordResponse res = ConfirmPasswordResponse.newBuilder()
 				.setValidPassword(Passwords.isExpectedPassword(password, salt, hashedPassword))
 				.build();
+		// send the res to the client
 		resObserver.onNext(res);
+		// signal the request is  finished
 		resObserver.onCompleted();
-		
-				
-		
-		
-		
-		
 	}// validate
-	
 }// PasswordService
