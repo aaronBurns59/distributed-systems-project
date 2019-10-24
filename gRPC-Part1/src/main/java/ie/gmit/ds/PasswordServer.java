@@ -8,14 +8,14 @@ import io.grpc.ServerBuilder;
 public class PasswordServer
 {
 	// Constant for assigning the server to the port number below
-	private static final int PORT_NUMBER = 9999;// 50551
+	private static final int PORT_NUMBER = 50551;
 	// used for running the server and communicating to client
 	private Server passwordServer;
 	// Logger is used to print the port number to the console 
 	// which lets the user know the server is running
 	private static final Logger logger = Logger.getLogger(PasswordServer.class.getName());
 	
-	// creates the server and a PasswordServiceImpl to access its methods for the client
+	// creates the server
 	private void start() throws IOException
 	{
 		passwordServer = ServerBuilder.forPort(PORT_NUMBER)
