@@ -1,5 +1,6 @@
 package ie.gmit.ds;
 
+import com.google.protobuf.BoolValue;
 import com.google.protobuf.ByteString;
 import io.grpc.stub.StreamObserver;
 
@@ -8,10 +9,6 @@ public class PasswordServiceImpl extends PasswordServiceGrpc.PasswordServiceImpl
 	@Override
 	public void hash(UserLoginRequest req, StreamObserver<UserLoginResponse> resObserver)
 	{
-		// Using method from gRPC get a password
-		// char[] password = req.getPassword().toCharArray();
-		
-		// USE THE AUTO GENERATED PASSWORD FOR TESTING
 		// Creating the variables that will be passed with the gRPC request
 		// Generating a random password
 		char[] password = req.getPassword().toCharArray();	
@@ -33,19 +30,24 @@ public class PasswordServiceImpl extends PasswordServiceGrpc.PasswordServiceImpl
 	}// hash
 	
 	@Override
-	public void validate(ConfirmPasswordRequest req, StreamObserver<ConfirmPasswordResponse> resObserver)
+	public void validate(ConfirmPasswordRequest req, StreamObserver<BoolValue> resObserver)
 	{
+		try
+		{
 		// Variables are the same as the above methods (Not Physically)
 		char[] password = req.getPassword().toCharArray();
 		byte[] salt = Passwords.getNextSalt();
 		byte[] hashedPassword = Passwords.hash(password, salt);
-		
-		// Generate the response 
-		ConfirmPasswordResponse res = ConfirmPasswordResponse.newBuilder()
-				.setValidPassword(Passwords.isExpectedPassword(password, salt, hashedPassword))
-				.build();
-		// send the res to the client
-		resObserver.onNext(res);
+
+		if (Passwords.isExpectedPassword(password, salt, hashedPassword))
+			resObserver.onNext(BoolValue.newBuilder().setValue(true).build());
+		else
+    	  	resObserver.onNext(BoolValue.newBuilder().setValue(false).build()); 
+		}// try
+		catch (RuntimeException ex)
+		{
+			resObserver.onNext(BoolValue.newBuilder().setValue(false).build());
+		}// catch
 		// signal the request is  finished
 		resObserver.onCompleted();
 	}// validate
