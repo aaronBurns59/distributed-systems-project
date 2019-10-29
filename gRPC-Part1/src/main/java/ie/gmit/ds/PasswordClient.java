@@ -2,9 +2,11 @@ package ie.gmit.ds;
 
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.StatusRuntimeException;
 import io.grpc.stub.StreamObserver;
 
 public class PasswordClient 
@@ -40,7 +42,33 @@ public class PasswordClient
     
     public void hashPassword(int id, String pass)
     {
+    	// Log the given id and password so I can verify them later
     	logger.info("User ID: " + id + " Password: " + pass);
+    	
+    	// Creating a RPC message for hashing to the auto generated gRPC method hash()
+    	UserLoginRequest hashReq = UserLoginRequest.newBuilder()
+    			.setUserId(id)
+    			.setPassword(pass)
+    			.build();
+    	// Instantiating a response message parameter for the gRPC method hash()
+    	// Have to instantiate this here because its needed in both the try and catch 
+    	// depending on circumstances 
+    	UserLoginResponse hashRes = null;
+    	
+    	try
+    	{
+    		// using the stub from the PasswordServiceGrpc.PasswordServiceBlockingStub
+    		// for synchronised communication between the server and client
+    	 	 hashRes = stub.hash(hashReq);
+    	}
+    	catch (StatusRuntimeException ex)
+    	{
+    		// returns if there is a problem at runtimes
+    		logger.log(Level.WARNING, "RPC failed: {0}", ex.getStatus());
+			return;
+    	}
+    	// logs the successful UserLoginResponse
+		logger.info(String.format("Hash Response from the server: \n%s ", hashRes));
     	
     //generate the response   	
     }// generateUserLoginRequest
