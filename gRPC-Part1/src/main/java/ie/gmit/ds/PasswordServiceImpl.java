@@ -32,23 +32,16 @@ public class PasswordServiceImpl extends PasswordServiceGrpc.PasswordServiceImpl
 	@Override
 	public void validate(ConfirmPasswordRequest req, StreamObserver<BoolValue> resObserver)
 	{
-		try
-		{
-		// Variables are the same as the above methods (Not Physically)
-		char[] password = req.getPassword().toCharArray();
-		byte[] salt = Passwords.getNextSalt();
-		byte[] hashedPassword = Passwords.hash(password, salt);
-
-		if (Passwords.isExpectedPassword(password, salt, hashedPassword))
-			resObserver.onNext(BoolValue.newBuilder().setValue(true).build());
-		else
-    	  	resObserver.onNext(BoolValue.newBuilder().setValue(false).build()); 
-		}// try
-		catch (RuntimeException ex)
-		{
-			resObserver.onNext(BoolValue.newBuilder().setValue(false).build());
-		}// catch
+		// generating the response for the gRPC validate method
+		BoolValue res = BoolValue.of(Passwords.isExpectedPassword(
+						req.getPassword().toCharArray(), // need to cast sa char[] so it matches isExpectedPassword params
+						req.getSalt().toByteArray(), 
+						req.getHashedPassword().toByteArray()));
+		
+		// send the res to the client
+		resObserver.onNext(res);
 		// signal the request is  finished
 		resObserver.onCompleted();
+
 	}// validate
 }// PasswordService
