@@ -10,8 +10,8 @@ public class PasswordServiceImpl extends PasswordServiceGrpc.PasswordServiceImpl
 	public void hash(UserLoginRequest req, StreamObserver<UserLoginResponse> resObserver)
 	{
 		// Creating the variables that will be passed with the gRPC request
-		// Generating a random password
-		char[] password = req.getPassword().toCharArray();	
+		// Gets the password from the request input parameter and passes it to a CharArray
+		char[] password = req.getPassword().toCharArray();
 		// using method from 'Passwords' class to get a salt for the hash method
 		byte[] salt = Passwords.getNextSalt();
 		// Creating a hashed version of the password using the salt for security
@@ -42,6 +42,5 @@ public class PasswordServiceImpl extends PasswordServiceGrpc.PasswordServiceImpl
 		resObserver.onNext(res);
 		// signal the request is  finished
 		resObserver.onCompleted();
-
 	}// validate
 }// PasswordService

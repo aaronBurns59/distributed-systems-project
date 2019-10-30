@@ -39,7 +39,6 @@ public class PasswordServer
         if (passwordServer != null)
         	passwordServer.shutdown();
     }// stop
-    
     // main method for starting and maintaining until shudown the server
     public static void main(String[] args) throws IOException, InterruptedException 
     {
