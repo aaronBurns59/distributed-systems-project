@@ -2,7 +2,7 @@ package ie.gmit.ds;
 
 import io.dropwizard.Configuration;
 
-public class UserAPIConfig extends Configuration
+public class UserApiConfig extends Configuration
 {
 
 }// UserAPIConfig
