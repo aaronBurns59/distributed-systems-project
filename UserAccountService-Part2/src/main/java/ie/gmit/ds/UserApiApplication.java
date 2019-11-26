@@ -12,11 +12,13 @@ public class UserApiApplication extends Application<UserApiConfig>
 		final UserApiResource resource = new UserApiResource();
 		environment.jersey().register(resource);
 		
+		final UserHealthCheck healthCheck = new UserHealthCheck();	
+		environment.healthChecks().register("example", healthCheck);
 	}// run
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws Exception
 	{
-		
+		new UserApiApplication().run(args);
 	}// main
 
 }// UserApiApplication
