@@ -9,6 +9,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -16,7 +17,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import ch.qos.logback.core.joran.conditional.ElseAction;
 
 @Path("/users")
 @Produces(MediaType.APPLICATION_JSON)
@@ -76,4 +76,36 @@ public class UserApiResource
             return Response.status(Status.NOT_FOUND).build();
         }// else
     }// createUser
+
+    @PUT
+    @Path("/{id}")
+    public Response updateUser(@PathParam("id") int id, User user)
+    {
+        // Validation to make sure that the what the user enters is correct
+        Set<ConstraintViolation<User>> violations = val.validate(user);
+        User u = UserDatabase.getUserById(user.getUserId());
+
+        if (violations.size() > 0) 
+        {
+            ArrayList<String> validationMessages = new ArrayList<String>();
+            for (ConstraintViolation<User> violation : violations)
+            {
+                validationMessages.add(violation.getPropertyPath().toString() + ": " + violation.getMessage());
+            }// for
+            return Response.status(Status.BAD_REQUEST).entity(validationMessages).build();
+        }// if
+
+        if (u != null) 
+        {
+            // overwrite the original data with the given id
+            UserDatabase.updateUser(id, user);
+            return Response.status(Status.OK).build();
+        }// if
+        else
+        {
+            return Response.status(Status.NOT_FOUND).build();
+         }// else
+
+    }// updateUser
+
 }// UserAPIResource
