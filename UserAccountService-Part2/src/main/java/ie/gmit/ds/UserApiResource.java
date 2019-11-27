@@ -121,5 +121,4 @@ public class UserApiResource
         else
             return Response.status(Status.NOT_FOUND).build();
     }// deleteUser
-
 }// UserAPIResource
