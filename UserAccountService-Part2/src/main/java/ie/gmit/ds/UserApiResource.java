@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -105,7 +106,20 @@ public class UserApiResource
         {
             return Response.status(Status.NOT_FOUND).build();
          }// else
-
     }// updateUser
+
+    @DELETE
+    @Path("/{id}")
+    public Response deleteUser(@PathParam("id") int id)
+     {
+        User user = UserDatabase.getUserById(id);
+        if (user != null) 
+        {
+            UserDatabase.deleteUser(id);
+            return Response.ok().build();
+        }// if
+        else
+            return Response.status(Status.NOT_FOUND).build();
+    }// deleteUser
 
 }// UserAPIResource
