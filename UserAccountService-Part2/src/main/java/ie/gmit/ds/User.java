@@ -1,7 +1,6 @@
 package ie.gmit.ds;
 
 import javax.validation.constraints.Pattern;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User
