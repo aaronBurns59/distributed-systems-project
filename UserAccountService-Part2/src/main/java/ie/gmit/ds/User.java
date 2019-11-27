@@ -6,40 +6,40 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User
 {
-	private int userId;
-	private String userName;
+	private int id;
+	private String name;
 	@Pattern(regexp = ".+@.+\\.[a-z].+\\.com")
-	private String userEmail;
-	private String userPassword;
+	private String email;
+	private String password;
 	
 	public User(){}// User
 	
 	public User(int id, String name, String email, String password)
 	{
-		userId = id;
-		userName = name;
-		userEmail = email;
-		userPassword = password;
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
 	}// User
 	
 	@JsonProperty
 	public int getUserId()
 	{
-		return userId;
+		return id;
 	}// getUserId
 	@JsonProperty
 	public String getUserName() 
 	{
-		return userName;
+		return name;
 	}// getUserName
 	@JsonProperty
 	public String getUserEmail() 
 	{
-		return userEmail;
+		return email;
 	}// getUserEmail
 	@JsonProperty
 	public String getUserPassword()
 	{
-		return userPassword;
+		return password;
 	}// getUserPassword
 }// User
