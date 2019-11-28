@@ -10,7 +10,7 @@ public class Login
     // Params needed for user login
     @NotBlank
     private int id;
-    @Length(min=9, max = 40)
+    @Length(min=3, max = 40)
     @NotBlank
     private String password;
 
@@ -26,5 +26,4 @@ public class Login
     {
         return password;
     }// getLoginPassword
-
 }// Login

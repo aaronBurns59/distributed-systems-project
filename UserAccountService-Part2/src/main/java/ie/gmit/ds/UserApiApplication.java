@@ -11,8 +11,6 @@ public class UserApiApplication extends Application<Configuration>
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserApiApplication.class);
 
-    // initialize() and run() prepare the runtime enviroment
-
     @Override
     public void initialize(Bootstrap<Configuration> b){}
  
@@ -31,5 +29,4 @@ public class UserApiApplication extends Application<Configuration>
 	{
 		new UserApiApplication().run(args);
 	}// main
-
 }// UserApiApplication

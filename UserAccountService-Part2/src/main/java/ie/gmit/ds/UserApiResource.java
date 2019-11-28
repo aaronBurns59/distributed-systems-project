@@ -50,6 +50,7 @@ public class UserApiResource
     @POST
     public Response createUser (User user) throws URISyntaxException 
     {
+        System.out.println("In the post method");
         // Validation to make sure that the what the user enters is correct
         Set<ConstraintViolation<User>> violations = val.validate(user);
         User u = UserDatabase.getUserById(user.getUserId());

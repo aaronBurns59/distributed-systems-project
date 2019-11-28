@@ -18,7 +18,7 @@ public class User
     @NotBlank
 	@Pattern(regexp=".+@.+\\.[a-z]+")
     private String email;
-    @Length(min=9, max = 40)
+    @Length(min=3, max = 40)
     @NotBlank
     private String password;
     private byte salt;
