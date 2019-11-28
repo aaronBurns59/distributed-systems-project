@@ -8,6 +8,8 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class User
 {
+
+    // Parameters needed for 
     @NotBlank
     private int id;
     @NotBlank

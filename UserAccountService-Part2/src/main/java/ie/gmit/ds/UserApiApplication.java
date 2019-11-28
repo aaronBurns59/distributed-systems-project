@@ -21,6 +21,9 @@ public class UserApiApplication extends Application<Configuration>
 	{
         LOGGER.info("Registering REST resources");
         environment.jersey().register(new UserApiResource(environment.getValidator()));
+
+        final UserHealthCheck healthCheck = new UserHealthCheck();
+        environment.healthChecks().register("example", healthCheck);
 	}// run
     
     // This main method is run via the jar that is referenced in the pom.xml file
