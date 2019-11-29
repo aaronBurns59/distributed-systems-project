@@ -24,6 +24,8 @@ import javax.ws.rs.core.Response.Status;
 public class UserApiResource
 {
     private final Validator val;
+    // This is the client that will talk to the server in part1
+    private UserClient client;
 
 	public UserApiResource(Validator val)
 	{
@@ -53,7 +55,7 @@ public class UserApiResource
         System.out.println("In the post method");
         // Validation to make sure that the what the user enters is correct
         Set<ConstraintViolation<User>> violations = val.validate(user);
-        User u = UserDatabase.getUserById(user.getUserId());
+        User u = UserDatabase.getUserById(user.getId());
         if (violations.size() > 0)
         {
             ArrayList<String> validationMessages = new ArrayList<String>();
@@ -69,9 +71,10 @@ public class UserApiResource
         // If  the user's id is not found add it to the userDatabase(HashMap) 
         if(u != null)
         {
-            UserDatabase.updateUser(user.getUserId(), user);
+            // userCLient
+            UserDatabase.updateUser(user.getId(), user);
             // Generate the response
-            return Response.created(new URI("/users/" + user.getUserId())).build();
+            return Response.created(new URI("/users/" + user.getId())).build();
         }// if
         else
         {
@@ -85,7 +88,7 @@ public class UserApiResource
     {
         // Validation to make sure that the what the user enters is correct
         Set<ConstraintViolation<User>> violations = val.validate(user);
-        User u = UserDatabase.getUserById(user.getUserId());
+        User u = UserDatabase.getUserById(user.getId());
 
         if (violations.size() > 0) 
         {
@@ -100,6 +103,7 @@ public class UserApiResource
         if (u != null) 
         {
             // overwrite the original data with the given id
+            // USERCLIENT
             UserDatabase.updateUser(id, user);
             return Response.status(Status.OK).build();
         }// if

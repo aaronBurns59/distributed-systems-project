@@ -3,6 +3,7 @@ package ie.gmit.ds;
 import javax.validation.constraints.Pattern;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import com.google.protobuf.ByteString;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -21,8 +22,8 @@ public class User
     @Length(min=3, max = 40)
     @NotBlank
     private String password;
-    private byte salt;
-    private byte hashPassword;
+    private ByteString salt;
+    private ByteString hashPassword;
 	
 	public User(){}// User
     
@@ -36,7 +37,7 @@ public class User
     }// User
     
     // This constructor is for listing all users and returning a single user
-    public User(int id, String name, String email, String password, byte salt, byte hashPassword)
+    public User(int id, String name, String email, String password, ByteString salt, ByteString hashPassword)
 	{
 		this.id = id;
 		this.name = name;
@@ -47,32 +48,32 @@ public class User
 	}// User
 	
 	@JsonProperty
-	public int getUserId()
+	public int getId()
 	{
 		return id;
 	}// getUserId
 	@JsonProperty
-	public String getUserName() 
+	public String getName()
 	{
 		return name;
 	}// getUserName
 	@JsonProperty
-	public String getUserEmail() 
+	public String getEmail()
 	{
 		return email;
 	}// getUserEmail
 	@JsonProperty
-	public String getUserPassword()
+	public String getPassword()
 	{
 		return password;
     }// getUserPassword
     @JsonProperty
-	public byte getSalt() 
+	public ByteString getSalt()
 	{
 		return salt;
 	}// getUserEmail
 	@JsonProperty
-	public byte getHashPassword()
+	public ByteString getHashPassword()
 	{
 		return hashPassword;
 	}// getUserPassword
