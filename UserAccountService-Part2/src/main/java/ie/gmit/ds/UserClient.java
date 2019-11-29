@@ -51,7 +51,7 @@ public class UserClient
                         userLogRes.getHashedPassword(),
                         userLogRes.getSalt()
                 );
-                UserDatabase.addUser(u.getId(), u);
+                UserDatabase.addUser(user);
             }// onNext
             @Override
             public void onError(Throwable t) {}

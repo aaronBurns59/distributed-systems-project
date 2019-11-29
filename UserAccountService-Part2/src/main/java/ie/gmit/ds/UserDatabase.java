@@ -18,16 +18,16 @@ public class UserDatabase
     {
         return new ArrayList<User>(users.values());
     }// getUsers
-    public static User getUserById(Integer id)
+    public static User getUserById(int id)
     {
         return users.get(id);
     }// getUserById
-    public static void addUser(int id, User user) {users.put(id, user); }// addUser
-    public static void updateUser(Integer id, User user)
+    public static void addUser(User user) {users.put(user.getId(), user); }// addUser
+    public static void updateUser(int id, User user)
     {
         users.put(id, user);
     }// updateUser
-    public static void deleteUser(Integer id)
+    public static void deleteUser(int id)
     {
         users.remove(id);
     }// deleteUser

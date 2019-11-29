@@ -95,7 +95,7 @@ public class UserApiResource
         User u = UserDatabase.getUserById(user.getId());
         if (violations.size() > 0) 
         {
-            ArrayList<String> validationMessages = new ArrayList<String>();
+            ArrayList<String> validationMessages = new ArrayList<>();
             for (ConstraintViolation<User> violation : violations)
             {
                 validationMessages.add(violation.getPropertyPath().toString() + ": " + violation.getMessage());
@@ -105,7 +105,7 @@ public class UserApiResource
         if (u != null) 
         {
             // update the user in db before hashing it
-            UserDatabase.updateUser(id, user);
+            UserDatabase.addUser(user);
             client.hash(user);
             return Response.status(Status.OK).build();
         }// if
