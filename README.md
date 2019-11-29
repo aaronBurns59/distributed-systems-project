@@ -7,7 +7,7 @@ mvn compile
 java -jar passwordService.jar
 
 # Part 2 UserAccountService
-Adapted from: [https://howtodoinjava.com/dropwizard/tutorial-and-hello-world-example/]([https://howtodoinjava.com/dropwizard/tutorial-and-hello-world-example
+Adapted from: (https://howtodoinjava.com/dropwizard/tutorial-and-hello-world-example/)[https://howtodoinjava.com/dropwizard/tutorial-and-hello-world-example]
 ## How to run UserAccountService-Part2
 mvn package  
 java -jar target/UserAccountService-Part2-0.0.1-SNAPSHOT.jar server userApiConfig.yaml  
