@@ -1,5 +1,6 @@
 package ie.gmit.ds;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,7 +12,7 @@ public class User
 {
 
     // Parameters needed for 
-    @NotBlank
+    @NotNull
     private int id;
     @NotBlank
     @Length(min=2, max = 32)

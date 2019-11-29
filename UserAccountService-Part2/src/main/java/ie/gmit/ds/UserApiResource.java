@@ -26,12 +26,16 @@ public class UserApiResource
     private final Validator val;
     // This is the client that will talk to the server in part1
     private UserClient client;
+    private static final String LOCAL_HOST = "localhost";
+    private static final int PORT_NUMBER = 50551;
 
 	public UserApiResource(Validator val)
 	{
         this.val = val;
+        this.client = new UserClient(LOCAL_HOST, PORT_NUMBER);
 	}// UserApiResource
-     
+
+     // Adpated from https://howtodoinjava.com/dropwizard/tutorial-and-hello-world-example/
 	@GET
 	public Response getUsers()
     {
@@ -67,11 +71,11 @@ public class UserApiResource
             // Generate the response
             return Response.status(Status.BAD_REQUEST).entity(validationMessages).build();
         }// if
-
         // If  the user's id is not found add it to the userDatabase(HashMap) 
         if(u != null)
         {
-            // userCLient
+            // use instance of UserClient otherwise issue with it not being static
+            client.hash(user);
             UserDatabase.updateUser(user.getId(), user);
             // Generate the response
             return Response.created(new URI("/users/" + user.getId())).build();
@@ -89,7 +93,6 @@ public class UserApiResource
         // Validation to make sure that the what the user enters is correct
         Set<ConstraintViolation<User>> violations = val.validate(user);
         User u = UserDatabase.getUserById(user.getId());
-
         if (violations.size() > 0) 
         {
             ArrayList<String> validationMessages = new ArrayList<String>();
@@ -99,12 +102,11 @@ public class UserApiResource
             }// for
             return Response.status(Status.BAD_REQUEST).entity(validationMessages).build();
         }// if
-
         if (u != null) 
         {
-            // overwrite the original data with the given id
-            // USERCLIENT
+            // update the user in db before hashing it
             UserDatabase.updateUser(id, user);
+            client.hash(user);
             return Response.status(Status.OK).build();
         }// if
         else
@@ -120,6 +122,7 @@ public class UserApiResource
         User user = UserDatabase.getUserById(id);
         if (user != null) 
         {
+            // don't need any methods from the client for deleting
             UserDatabase.deleteUser(id);
             return Response.ok().build();
         }// if

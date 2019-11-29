@@ -20,8 +20,6 @@ public class UserClient
     private final int TIME_OUT_LIMIT = 5;
     // used for displaying that the client is listening
     private static final Logger logger = Logger.getLogger(UserClient.class.getName());
-    private static final String LOCAL_HOST = "localhost";
-    private static final int PORT_NUMBER = 50551;
 
     // creates the communication capability for the client and server
     public UserClient(String host, int port)
