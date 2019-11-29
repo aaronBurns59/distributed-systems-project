@@ -67,7 +67,7 @@ public class UserApiResource
             {
                 validationMessages.add(violation.getPropertyPath().toString() + ": " + violation.getMessage());
             }// for
-            // If a violation of the contraints placed on the user class properties are found return here
+            // If a violation of the constraints placed on the user class properties are found return here
             // Generate the response
             return Response.status(Status.BAD_REQUEST).entity(validationMessages).build();
         }// if
@@ -76,7 +76,7 @@ public class UserApiResource
         {
             // use instance of UserClient otherwise issue with it not being static
             client.hash(user);
-            UserDatabase.updateUser(user.getId(), user);
+            UserDatabase.addUser(user);
             // Generate the response
             return Response.created(new URI("/users/" + user.getId())).build();
         }// if
@@ -129,4 +129,36 @@ public class UserApiResource
         else
             return Response.status(Status.NOT_FOUND).build();
     }// deleteUser
+
+    // Same as previous post request except with different params
+    @POST
+    @Path("/login")
+    public Response loginUser(Login login)
+    {
+        // Validation to make sure that the what the user enters is correct
+        Set<ConstraintViolation<Login>> violations = val.validate(login);
+        // get the user from the db
+        User user = UserDatabase.getUserById(login.getLoginId());
+        if (violations.size() > 0)
+        {
+            ArrayList<String> validationMessages = new ArrayList<String>();
+            for (ConstraintViolation<Login> violation : violations)
+            {
+                validationMessages.add(violation.getPropertyPath().toString() + ": " + violation.getMessage());
+            }// for
+            // If a violation of the constraints placed on the user class properties are found return here
+            // Generate the response
+            return Response.status(Status.BAD_REQUEST).entity(validationMessages).build();
+        }// if
+        if(user != null)
+        {
+            // use the validate method from the client/gRPC to check its valid
+            if(client.validate(login.getLoginPassword(),user.getHashPassword(), user.getSalt()))
+                return Response.status(Status.OK).build();
+            else
+                return Response.status(Response.Status.NOT_FOUND).build();
+        }// if
+        else
+            return Response.status(Status.NOT_FOUND).build();
+    }// loginUser
 }// UserAPIResource
