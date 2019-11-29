@@ -40,7 +40,7 @@ public class UserClient
         channel.shutdown().awaitTermination(TIME_OUT_LIMIT, TimeUnit.SECONDS);
     }// shutdown
 
-    public void hash(User user)
+    public void hash(final User user)
     {
         StreamObserver<UserLoginResponse> res = new StreamObserver<UserLoginResponse>() {
             @Override

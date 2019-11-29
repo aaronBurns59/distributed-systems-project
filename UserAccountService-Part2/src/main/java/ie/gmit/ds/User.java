@@ -37,12 +37,11 @@ public class User
     }// User
     
     // This constructor is for listing all users and returning a single user
-    public User(int id, String name, String email, String password, ByteString salt, ByteString hashPassword)
+    public User(int id, String name, String email,  ByteString salt, ByteString hashPassword)
 	{
 		this.id = id;
 		this.name = name;
 		this.email = email;
-        this.password = password;
         this.salt = salt;
         this.hashPassword= hashPassword;
 	}// User
