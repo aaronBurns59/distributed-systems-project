@@ -1,5 +1,6 @@
 package ie.gmit.ds;
 
+import com.google.protobuf.ByteString;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
@@ -71,6 +72,23 @@ public class UserClient
         {
             logger.warning("Exception: " + e);
         }// catch
-
     }// hash
+    // Use ByteString now byte
+    public boolean validate(String password, ByteString hashedPassword, ByteString salt)
+    {
+        ConfirmPasswordRequest req = ConfirmPasswordRequest.newBuilder()
+                .setPassword(password)
+                .setHashedPassword(hashedPassword)
+                .setSalt(salt).build();
+        try
+        {
+            ConfirmPasswordResponse res = syncStub.validate(req);
+            return res.getValid();
+        }
+        catch(StatusRuntimeException e)
+        {
+            logger.warning("Exception: " + e);
+            return false;
+        }
+    }// validate
 }// UserClient
