@@ -9,11 +9,12 @@ java -jar passwordService.jar
 # Part 2 UserAccountService
 Adapted from:
 [https://howtodoinjava.com/dropwizard/tutorial-and-hello-world-example/](https://howtodoinjava.com/dropwizard/tutorial-and-hello-world-example)
-## How to run UserAccountService-Part2
+## How to run UserAccountService-Part2 from intellij IDE
 mvn package  
-java -jar target/UserAccountService-Part2-0.0.1-SNAPSHOT.jar server userApiConfig.yaml  
+java -jar target/UserAccountService-Part2-0.0.1-SNAPSHOT.jar server userApiConfig.yaml
 
 hosted on: localhost:9000
 
 # Swaggerhub API
-(https://app.swaggerhub.com/apis/GMIT7/UserAPI/1.1#free)[https://app.swaggerhub.com/apis/GMIT7/UserAPI/1.1#free]
+[https://app.swaggerhub.com/apis/GMIT7/UserAPI/1.1#free](https://app.swaggerhub.com/apis/GMIT7/UserAPI/1.1#free)
+
